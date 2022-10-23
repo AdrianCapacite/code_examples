@@ -16,7 +16,12 @@
 
   A linked list can grow and shrink dynamically and is stoted non-contigously
   in heap memory.
-  
+
+  Adding a node will insert it to a location where the value of the new node is
+  lesser than previous node or at the end of the list
+
+  Removing a node will remove the node that matches the value specified
+
   This examples shows the creation of a linked list and how to add and remove
 
   Prefixes:
