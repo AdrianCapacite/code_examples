@@ -17,7 +17,7 @@
 
   The queue is implemented as a linked list
 
-  This examples shows the creation of a queue and how to push and pop
+  This examples shows the creation of a stack and how to push and pop
 
   Prefixes:
     p_ is a pointer
@@ -44,7 +44,7 @@ int main()
 {
   // Create pointer to head node
   // It is NULL because there is no head node to point to yet
-  Node *p_top, = NULL;
+  Node *p_top = NULL;
 
   // Create an inital stack
   push(&p_top, 120);
@@ -150,50 +150,55 @@ void push(Node **p2_top, int value)
     return;
   }
 
-  // Assign values to new node
-  p_newNode->next = NULL;
+  // Assign pointer to next node and value to new node
+  p_newNode->next = *p2_top;
   p_newNode->value = value;
 
+  // Set p_top to point to new node
+  *p2_top = p_newNode;
 }
 
 /**
  * @brief Removes a node from the top of the stack
  *
- * @param p2_top
+ * @param p2_top double pointer to top node
  * @return int value of popped node
  */
-int pop(Node **p2_head)
+int pop(Node **p2_top)
 {
-  // Fetch value from head node
-  int value = (*p2_head)->value;
-  // Store address of old head into temp pointer
-  Node *p_temp = *p2_head;
-
-  // Set p_head to the address of the next node
-  // This removes the node from the queue
-  *p2_head = (*p2_head)->next;
-
-  // Check if list is empty then set tail to NULL
-  if (*p2_head == NULL)
+  // Check if stack is empty
+  if (*p2_top == NULL)
   {
-    *p2_tail = NULL;
+    printf("Stack is empty\n");
+    return 0;
   }
 
-  // Free memory location of dequeued node
+  // Fetch value from node to be popped
+  int value = (*p2_top)->value;
+
+  // Place address of node to be popped into a temp pointer
+  Node *p_temp = *p2_top;
+
+  // Set the next node to be the new top node
+  *p2_top = (*p2_top)->next;
+
+  // Free memory location of popped node
   free(p_temp);
-  // Return value fetched from dequeued node
+
+  // Return value fetched from popped node
   return value;
 }
 
 /**
- * @brief Frees memory allocated to queue
+ * @brief Frees memory allocated to stack
  *
- * @param p2_head
+ * @param p2_top double pointer to top node
  */
-void freeStack(Node **p2_head, Node **p2_tail)
+void freeStack(Node **p2_top)
 {
-  // Set current node to head node
-  Node *p_currNode = *p2_head;
+  // Set current node to top node
+  Node *p_currNode = *p2_top;
+
   // Loop through each node and free them
   while (p_currNode != NULL)
   {
@@ -203,8 +208,7 @@ void freeStack(Node **p2_head, Node **p2_tail)
   }
 
   // Set p_head and p_tail to null
-  *p2_head = NULL;
-  *p2_tail = NULL;
+  *p2_top = NULL;
 
-  printf("List sucessfully freed\n");
+  printf("Stack sucessfully freed\n");
 }
