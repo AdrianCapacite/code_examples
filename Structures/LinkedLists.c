@@ -12,7 +12,9 @@
     - next - pointer to next node
     - value - value of node
 
-  p_head -> [head] -> [node] -> [node] -> [node] -> [node] -> NULL
+  *p_head
+    ⬇️
+  [head] -> [node] -> [node] -> [node] -> [node] -> NULL
 
   A linked list can grow and shrink dynamically and is stoted non-contigously
   in heap memory.
@@ -41,11 +43,10 @@ typedef struct Node {
 } Node;
 
 // Function prototypes
-int mainMenu();
-void printList(Node *p_head);
+void printList(Node *p_node);
 void addNode(Node **p2_head, int value);
 int removeNode(Node **p2_head, int value);
-void freeList(Node *p2_head);
+void freeList(Node **p2_node);
 
 int main()
 {
@@ -122,14 +123,14 @@ int main()
       }
     }
   } while (usrSelect != 4);
-  freeList(p_head);
+  freeList(&p_head);
   return 0;
 }
 
 /**
  * @brief Prints the list
  *
- * @param p_node Pointer to head node
+ * @param p_currNode Pointer to head node
  */
 void printList(Node *p_node)
 {
@@ -149,7 +150,7 @@ void printList(Node *p_node)
  * @brief Adds a new node to the list
  *
  * @param p2_head double pointer to head node
- * @param value value to add to list
+ * @param value value stored in new node
  */
 void addNode(Node **p2_head, int value)
 {
@@ -202,10 +203,16 @@ void addNode(Node **p2_head, int value)
  * @brief Removes a node from the list
  *
  * @param p2_head double pointer to head of node
- * @param key value to remove
+ * @param key value to remove from list
  */
 int removeNode(Node **p2_head, int key)
 {
+  // Check if list is empty
+  if (*p2_head == NULL)
+  {
+    printf("List is empty\n");
+    return 0;
+  }
   // If value of head node matches key value
   // Else look through the list
   if (key == (*p2_head)->value)
@@ -250,17 +257,21 @@ int removeNode(Node **p2_head, int key)
 /**
  * @brief Frees memory allocated to linked list
  *
- * @param p_head pointer to head node
+ * @param p_currNode pointer to head node
  */
-void freeList(Node *p_head)
+void freeList(Node **p2_head)
 {
+  Node *p_currNode = *p2_head;
   // Free each node
-  while (p_head != NULL)
+  while (p_currNode != NULL)
   {
-    Node *p_temp = p_head;
-    p_head = p_head->next;
+    Node *p_temp = p_currNode;
+    p_currNode = p_currNode->next;
     free(p_temp);
   }
+
+  // Set p_head to null
+  *p2_head = NULL;
 
   printf("List sucessfully freed\n");
 }
