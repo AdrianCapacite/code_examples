@@ -1,6 +1,5 @@
-VSC here.lnk
-*.exe
 *
 !/**/
 !*.*
 VSC here.lnk
+*.exe
