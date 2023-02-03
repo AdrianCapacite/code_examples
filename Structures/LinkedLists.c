@@ -43,7 +43,7 @@ typedef struct Node {
 } Node;
 
 // Function prototypes
-void printList(Node *p_node);
+void printList(Node *p_currNode);
 void addNode(Node **p2_head, int value);
 int removeNode(Node **p2_head, int value);
 void freeList(Node **p2_node);
@@ -62,20 +62,22 @@ int main()
   addNode(&p_head, 50);
 
   // Program loop
-  int usrSelect = 0;
-  int usrIn;
+  int usrSelect = 0;  // Store user menu selection
+  int usrIn;          // Store user value entry
+
   do
   {
+    // Menu user prompt
     printf("\n");
     printf("================================================================\n");
     printf("\n");
     printf("[1] Add node \n[2] Remove node \n[3] Print list \n[4] Exit\n");
     scanf("%d", &usrSelect);
 
-
+    // Execute selection
     switch (usrSelect)
     {
-      // Add node
+      // Add node to linked list
       case 1:
       {
         // Ask user for number to add to list
@@ -87,7 +89,7 @@ int main()
         printList(p_head);
         break;
       }
-      // Remove node
+      // Remove node from linked list
       case 2:
       {
         // Ask user for number to remove from list
@@ -123,6 +125,7 @@ int main()
       }
     }
   } while (usrSelect != 4);
+
   freeList(&p_head);
   return 0;
 }
@@ -132,15 +135,15 @@ int main()
  *
  * @param p_currNode Pointer to head node
  */
-void printList(Node *p_node)
+void printList(Node *p_currNode)
 {
   printf("HEAD -> ");
 
   // Print value of current node then move to next node until current node is null
-  while (p_node != NULL)
+  while (p_currNode != NULL)
   {
-    printf("%d -> ", p_node->value);
-    p_node = p_node->next;
+    printf("%d -> ", p_currNode->value);
+    p_currNode = p_currNode->next;
   }
 
   printf("NULL\n");

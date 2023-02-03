@@ -120,15 +120,15 @@ int main()
  *
  * @param p_currNode
  */
-void printStack(Node *p_node)
+void printStack(Node *p_currNode)
 {
   printf("*p_top: ");
 
   // Print value of current node then move to next node until current node is null
-  while (p_node != NULL)
+  while (p_currNode != NULL)
   {
-    printf("%d -> ", p_node->value);
-    p_node = p_node->next;
+    printf("%d -> ", p_currNode->value);
+    p_currNode = p_currNode->next;
   }
 
   printf("NULL\n");
